@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Review & Rating Platform</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>🎬 Movie Review & Rating</h1>
+    <input type="text" id="searchInput" placeholder="Search for a movie...">
+    <button id="searchBtn">Search</button>
+  </header>
+
+  <main>
+    <section id="movieResults" class="movie-grid"></section>
+  </main>
+
+  <!-- Modal for movie details -->
+  <div id="movieModal" class="modal hidden">
+    <div class="modal-content">
+      <span id="closeModal">&times;</span>
+      <div id="movieDetails"></div>
+      <div id="reviewSection">
+        <h3>User Reviews</h3>
+        <form id="reviewForm">
+          <input type="number" id="rating" min="1" max="5" placeholder="⭐ Rating (1-5)" required>
+          <textarea id="reviewText" placeholder="Write your review..." required></textarea>
+          <button type="submit">Submit Review</button>
+        </form>
+        <ul id="reviewList"></ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

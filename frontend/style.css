@@ -1,0 +1,107 @@
+/* Basic Reset */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: Arial, sans-serif;
+  background: #111;
+  color: #fff;
+  min-height: 100vh;
+}
+
+header {
+  text-align: center;
+  padding: 20px;
+  background: #222;
+}
+
+header input, header button {
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+  border: none;
+}
+
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  padding: 20px;
+}
+
+.movie-card {
+  background: #222;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.movie-card:hover { transform: scale(1.05); }
+
+.movie-card img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.movie-card h3 {
+  padding: 10px;
+  text-align: center;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.8);
+  display: flex; justify-content: center; align-items: center;
+}
+
+.modal.hidden { display: none; }
+
+.modal-content {
+  background: #222;
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+#closeModal {
+  float: right;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+#reviewForm {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#reviewForm input, #reviewForm textarea {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+}
+
+#reviewForm button {
+  background: #ff9800;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#reviewList {
+  margin-top: 15px;
+  list-style: none;
+}
+
+#reviewList li {
+  background: #333;
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 5px;
+}

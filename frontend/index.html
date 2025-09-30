@@ -3,18 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Movie Review & Rating Platform</title>
+  <title>CineScope 🎬</title>
   <link rel="stylesheet" href="style.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
   <header>
-    <h1>🎬 Movie Review & Rating</h1>
-    <input type="text" id="searchInput" placeholder="Search for a movie...">
-    <button id="searchBtn">Search</button>
+    <h1>🎬 CineScope</h1>
+    <p class="tagline">YOUR LENS INTO THE WORLD OF MOVIES</p>
+    <p class="explanation">
+      A movie review and rating platform where users can search movies, view details, add ratings & reviews, and maintain a personal watchlist.
+    </p>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search for a movie...">
+      <button id="searchBtn">Search</button>
+    </div>
   </header>
 
   <main>
-    <section id="movieResults" class="movie-grid"></section>
+    <section>
+      <h2>SEARCH RESULTS</h2>
+      <div id="movieResults" class="movie-grid"></div>
+    </section>
+
+    <section>
+      <h2>MY WATCHLIST</h2>
+      <div id="watchlist" class="movie-grid"></div>
+    </section>
   </main>
 
   <!-- Modal for movie details -->
@@ -22,6 +38,7 @@
     <div class="modal-content">
       <span id="closeModal">&times;</span>
       <div id="movieDetails"></div>
+      <button id="addToWatchlist" class="watchlist-btn">+ Add to Watchlist</button>
       <div id="reviewSection">
         <h3>User Reviews</h3>
         <form id="reviewForm">

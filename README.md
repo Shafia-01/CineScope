@@ -195,13 +195,19 @@ Follow these steps to set up and run CineScope on your local environment.
 
 ## 📸 Screenshots
 ### 🖥️ Home Page & Search Results
-![CineScope Home Page](assets/placeholder.png)
+![CineScope Home Page](assets/Demo%20(1).png)
 
 ### 🍿 Search Query Results
-![Search Results Screen](assets/placeholder.png)
+![Search Results Screen](assets/Demo%20(2).png)
 
 ### 🎬 Movie Details Modal
-![Details Modal](assets/placeholder.png)
+![Details Modal](assets/Demo%20(4).png)
+
+### ⭐ Movie Review & Rating Form
+![Review and Rating Form](assets/Demo%20(3).png)
+
+### 🖥️ Home Page with Search & Watchlist
+![Home Page with Search and Watchlist](assets/Demo%20(5).png)
 
 ---
 

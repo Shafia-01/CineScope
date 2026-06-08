@@ -5,13 +5,13 @@ import cors from "cors";
 
 dotenv.config();
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Enable CORS so frontend can call backend
 app.use(cors());
 
 // Proxy for search
-app.get("/api/search", async (req, res) => {
+app.get("/search", async (req, res) => {
   const query = req.query.q;
   try {
     const response = await fetch(`https://www.omdbapi.com/?apikey=${process.env.OMDB_KEY}&s=${query}`);
@@ -23,7 +23,7 @@ app.get("/api/search", async (req, res) => {
 });
 
 // Proxy for movie details
-app.get("/api/details/:id", async (req, res) => {
+app.get("/details/:id", async (req, res) => {
   const movieId = req.params.id;
   try {
     const response = await fetch(`https://www.omdbapi.com/?apikey=${process.env.OMDB_KEY}&i=${movieId}&plot=full`);

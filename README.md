@@ -10,8 +10,7 @@
 ---
 
 ## 🔗 Demo Links & Resources
-* ⚡ **Live Frontend Demo:** [Link](https://cinescope-worldofmovies.netlify.app/)
-* 🌐 **Live Backend Proxy:** [Link](https://cinescope-7k1y.onrender.com)
+* ⚡ **Live Demo:** [Link](https://cinescope-worldofmovies.netlify.app/)
 
 ---
 

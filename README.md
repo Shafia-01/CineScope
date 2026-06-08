@@ -71,4 +71,3 @@ cinescope/
 - 🔑 User authentication (login/signup system).
 - ☁️ Cloud database (MongoDB/PostgreSQL) for reviews & watchlist.
 - 🎯 Personalized recommendations using AI/ML.
-- 🚀 Deployment (Netlify + Render) with live demo link.

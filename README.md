@@ -1,16 +1,17 @@
+<div align="center">
+
 # 🎬 CineScope
 
-> **Your Lens Into the World of Movies** — A modern, full-stack movie discovery, review, and watchlist platform that enables users to search movies, explore detailed information, submit ratings & reviews, and manage personalized watchlists through secure API integration.
+A modern, full-stack movie discovery, review, and watchlist platform that enables users to search movies, explore detailed information, submit ratings & reviews, and manage personalized watchlists through secure API integration.
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Node.js Version](https://img.shields.io/badge/Node.js-v16%2B-blue.svg)](https://nodejs.org/)
 [![Express](https://img.shields.io/badge/Express-v4.x-lightgrey.svg)](https://expressjs.com/)
 [![OMDb API](https://img.shields.io/badge/API-OMDb-orange.svg)](https://www.omdbapi.com/)
 
----
+### 🔗 **[CineScope - Your Lens Into the World of Movies (Live Demo) ](https://cinescope-worldofmovies.netlify.app/)**
 
-## 🔗 Demo Links & Resources
-* ⚡ **Live Demo:** [Link](https://cinescope-worldofmovies.netlify.app/)
+</div>
 
 ---
 

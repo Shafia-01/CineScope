@@ -1,16 +1,19 @@
 <div align="center">
 
-# 🎬 CineScope
-
-A modern, full-stack movie discovery, review, and watchlist platform that enables users to search movies, explore detailed information, submit ratings & reviews, and manage personalized watchlists through secure API integration.
-
-[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+# CineScope
+[![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![HTML5](https://img.shields.io/badge/HTML5-orange.svg)](https://developer.mozilla.org/en-US/docs/Web/HTML)
+[![CSS3](https://img.shields.io/badge/CSS3-blue.svg)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 [![Node.js Version](https://img.shields.io/badge/Node.js-v16%2B-blue.svg)](https://nodejs.org/)
 [![Express](https://img.shields.io/badge/Express-v4.x-lightgrey.svg)](https://expressjs.com/)
 [![OMDb API](https://img.shields.io/badge/API-OMDb-orange.svg)](https://www.omdbapi.com/)
+[![Netlify](https://img.shields.io/badge/Netlify-teal.svg)](https://www.netlify.com/)
+[![Render](https://img.shields.io/badge/Render-black.svg)](https://render.com/)
 
-### 🔗 **[CineScope - Your Lens Into the World of Movies (Live Demo) ](https://cinescope-worldofmovies.netlify.app/)**
-
+  <h3>🔗 <a href="https://cinescope-worldofmovies.netlify.app/">CineScope - Your Lens Into the World of Movies</a></h3>
+  <p>
+    <i>A modern, full-stack movie discovery, review, and watchlist platform that enables users to search movies, explore detailed information, submit ratings & reviews, and manage personalized watchlists through secure API integration.</i>
+  </p>
 </div>
 
 ---
@@ -61,7 +64,7 @@ flowchart TD
 | **Backend** | Node.js, Express.js, CORS, Dotenv, Node-Fetch |
 | **API** | OMDb REST API |
 | **Persistence** | Browser `localStorage` API |
-| **Deployment** | Render (Backend), Static Web Hosting (Frontend) |
+| **Deployment** | Render (Backend), Netlify (Frontend) |
 
 ---
 
@@ -149,7 +152,16 @@ reviewForm.onsubmit = (e) => {
 };
 ```
 
+
 ---
+
+## 🚀 Deployment
+The application is deployed using a decoupled frontend/backend architecture:
+* **Frontend**: Hosted on [Netlify](https://www.netlify.com/) at [cinescope-frontend](https://cinescope-worldofmovies.netlify.app/)
+* **Backend**: Hosted on [Render](https://render.com/) at [cinescope-backend](https://cinescope-7k1y.onrender.com)
+
+---
+
 
 ## 💻 Local Development Setup
 Follow these steps to set up and run CineScope on your local environment.
@@ -232,8 +244,3 @@ Follow these steps to set up and run CineScope on your local environment.
 * **Persistent States**: Implemented user reviews and watchlists using local storage persistence, reducing server overhead.
 * **Responsive Layouts**: Designed a custom cinematic, mobile-responsive theme from scratch using pure CSS Grid and Flexbox.
 * **Error Tolerant Flows**: Coded defensive conditions to handle API network timeouts, query failures, and missing properties gracefully.
-
----
-
-## 📝 License
-This project is licensed under the [MIT License](LICENSE) - see the LICENSE file for details.

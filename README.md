@@ -11,6 +11,7 @@
 [![Render](https://img.shields.io/badge/Render-black.svg)](https://render.com/)
 
   <h3>🔗 <a href="https://cinescope-worldofmovies.netlify.app/">CineScope - Your Lens Into the World of Movies</a></h3>
+  <h3><a href="hhttps://youtu.be/kz-9Yrg-rS4"><img src="https://img.shields.io/badge/YouTube-Demo%20Video-red?style=flat-square&logo=youtube&logoColor=white" alt="YouTube Demo Video"></a></h3>
   <p>
     <i>A modern, full-stack movie discovery, review, and watchlist platform that enables users to search movies, explore detailed information, submit ratings & reviews, and manage personalized watchlists through secure API integration.</i>
   </p>
@@ -206,20 +207,27 @@ Follow these steps to set up and run CineScope on your local environment.
 ---
 
 ## 📸 Screenshots
-### 🖥️ Home Page & Search Results
-![CineScope Home Page](assets/Demo%20(1).png)
 
-### 🍿 Search Query Results
-![Search Results Screen](assets/Demo%20(2).png)
+<div align="center">
+  <h3>🖥️ Home Page & Search Results</h3>
+  <img src="assets/Demo%20(1).png" alt="CineScope Home Page" width="600">
+  <br><br>
 
-### 🎬 Movie Details Modal
-![Details Modal](assets/Demo%20(4).png)
+  <h3>🍿 Search Query Results</h3>
+  <img src="assets/Demo%20(2).png" alt="Search Results Screen" width="600">
+  <br><br>
 
-### ⭐ Movie Review & Rating Form
-![Review and Rating Form](assets/Demo%20(3).png)
+  <h3>🎬 Movie Details Modal</h3>
+  <img src="assets/Demo%20(4).png" alt="Details Modal" width="600">
+  <br><br>
 
-### 🖥️ Home Page with Search & Watchlist
-![Home Page with Search and Watchlist](assets/Demo%20(5).png)
+  <h3>⭐ Movie Review & Rating Form</h3>
+  <img src="assets/Demo%20(3).png" alt="Review and Rating Form" width="600">
+  <br><br>
+
+  <h3>🖥️ Home Page with Search & Watchlist</h3>
+  <img src="assets/Demo%20(5).png" alt="Home Page with Search and Watchlist" width="600">
+</div>
 
 ---
 

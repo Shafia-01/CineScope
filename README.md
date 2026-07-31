@@ -23,7 +23,7 @@
 
 ---
 
-## 📌 Problem Statement
+## 📌 Project Overview
 In the digital era, movie enthusiasts often struggle with scattered movie data, cluttered interfaces, or platforms that require immediate signups just to browse and track movies. Existing mainstream solutions are often overwhelming, loaded with advertisements, and demanding on system resources. 
 
 **CineScope** was built to solve this by providing a lightweight, cinematic, and clutter-free interface. It offers high-performance movie searches, seamless review collection, and private watchlist curation without requiring complex user onboarding, serving as a clean utility for casual viewers.
@@ -44,7 +44,7 @@ In the digital era, movie enthusiasts often struggle with scattered movie data, 
 
 ---
 
-## 🏗️ Architecture Overview
+## 🏗️ Architecture
 CineScope separates concerns into a modular frontend and backend proxy architecture to prevent cross-origin issues and secure private environment credentials.
 
 ### System Flow

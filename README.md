@@ -11,9 +11,13 @@
 [![Render](https://img.shields.io/badge/Render-black.svg)](https://render.com/)
 
   <h3>🔗 <a href="https://cinescope-worldofmovies.netlify.app/">CineScope - Your Lens Into the World of Movies</a></h3>
-  <h3><a href="hhttps://youtu.be/kz-9Yrg-rS4"><img src="https://img.shields.io/badge/YouTube-Demo%20Video-red?style=flat-square&logo=youtube&logoColor=white" alt="YouTube Demo Video"></a></h3>
   <p>
     <i>A modern, full-stack movie discovery, review, and watchlist platform that enables users to search movies, explore detailed information, submit ratings & reviews, and manage personalized watchlists through secure API integration.</i>
+  </p>
+
+  <h3><a href="hhttps://youtu.be/kz-9Yrg-rS4"><img src="https://img.shields.io/badge/YouTube-Demo%20Video-red?style=flat-square&logo=youtube&logoColor=white" alt="YouTube Demo Video"></a></h3>
+  <p>
+    The demo link above features a video walkthrough demonstrating CineScope's movie search capabilities, detailed movie detail modals, rating and review submissions, persistent watchlist management, and the secure Express API proxy integration.
   </p>
 </div>
 
@@ -208,26 +212,22 @@ Follow these steps to set up and run CineScope on your local environment.
 
 ## 📸 Screenshots
 
-<div align="center">
-  <h3>🖥️ Home Page & Search Results</h3>
-  <img src="assets/Demo%20(1).png" alt="CineScope Home Page" width="600">
-  <br><br>
+<h3 align="center">1. Search & Watchlist Experience</h3>
+<p align="center"><i>The clean, cinematic home page allows users to search for movies, view query results dynamically, and manage their personal watchlists.</i></p>
+<p align="center">
+  <img src="assets/Demo%20(1).png" alt="CineScope Home Page" width="32.5%" />
+  <img src="assets/Demo%20(2).png" alt="Search Query Results" width="32.5%" />
+  <img src="assets/Demo%20(5).png" alt="Home Page with Watchlist" width="32.5%" />
+</p>
 
-  <h3>🍿 Search Query Results</h3>
-  <img src="assets/Demo%20(2).png" alt="Search Results Screen" width="600">
-  <br><br>
+<br>
 
-  <h3>🎬 Movie Details Modal</h3>
-  <img src="assets/Demo%20(4).png" alt="Details Modal" width="600">
-  <br><br>
-
-  <h3>⭐ Movie Review & Rating Form</h3>
-  <img src="assets/Demo%20(3).png" alt="Review and Rating Form" width="600">
-  <br><br>
-
-  <h3>🖥️ Home Page with Search & Watchlist</h3>
-  <img src="assets/Demo%20(5).png" alt="Home Page with Search and Watchlist" width="600">
-</div>
+<h3 align="center">2. Movie Details & Reviews</h3>
+<p align="center"><i>Interactive detail modals showing comprehensive movie metadata fetched from OMDb, alongside ratings and reviews that persist locally.</i></p>
+<p align="center">
+  <img src="assets/Demo%20(4).png" alt="Movie Details Modal" width="49%" />
+  <img src="assets/Demo%20(3).png" alt="Movie Review & Rating Form" width="49%" />
+</p>
 
 ---
 
@@ -238,17 +238,8 @@ Follow these steps to set up and run CineScope on your local environment.
 
 ---
 
-## 🚀 Future Improvements
+## 🚀 Future Roadmap
 * **🔑 User Authentication**: Integrate JWT-based token authentication to support personalized user logins and private profiles.
 * **☁️ Database Integration**: Migrate client-side LocalStorage to a persistent cloud database (e.g., MongoDB or PostgreSQL) for cross-device synchronization.
 * **🎯 Recommendation Engine**: Implement a basic content-filtering recommendation engine based on user ratings and genres.
 * **📢 Social Sharing**: Enable users to share their watchlist or movie reviews directly to social platforms or via unique URLs.
-
----
-
-## 📄 Key Technical Takeaways
-* **Full-Stack Architecture**: Built a movie discovery platform utilizing HTML5, CSS3, Vanilla JS, and an Express.js backend.
-* **Secure API Gateway**: Designed and deployed a Node.js proxy to route OMDb API calls, preventing client-side API key leakage and bypassing CORS constraints.
-* **Persistent States**: Implemented user reviews and watchlists using local storage persistence, reducing server overhead.
-* **Responsive Layouts**: Designed a custom cinematic, mobile-responsive theme from scratch using pure CSS Grid and Flexbox.
-* **Error Tolerant Flows**: Coded defensive conditions to handle API network timeouts, query failures, and missing properties gracefully.

@@ -15,7 +15,7 @@
     <i>A modern, full-stack movie discovery, review, and watchlist platform that enables users to search movies, explore detailed information, submit ratings & reviews, and manage personalized watchlists through secure API integration.</i>
   </p>
 
-  <h3><a href="https://youtu.be/kz-9Yrg-rS4"><img src="https://img.shields.io/badge/YouTube-Demo%20Video-red?style=flat-square&logo=youtube&logoColor=white" alt="YouTube Demo Video"></a></h3>
+  <h3><a href="https://youtu.be/YoLwDTEHoXk"><img src="https://img.shields.io/badge/YouTube-Demo%20Video-red?style=flat-square&logo=youtube&logoColor=white" alt="YouTube Demo Video"></a></h3>
   <p>
     The demo link above features a video walkthrough demonstrating CineScope's movie search capabilities, detailed movie detail modals, rating and review submissions, persistent watchlist management, and the secure Express API proxy integration.
   </p>

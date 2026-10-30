@@ -10,6 +10,11 @@ const PORT = process.env.PORT || 3000;
 // Enable CORS so frontend can call backend
 app.use(cors());
 
+// Health check / root route
+app.get("/", (req, res) => {
+  res.json({ status: "ok", message: "CineScope API is running!" });
+});
+
 // Proxy for search
 app.get("/search", async (req, res) => {
   const query = req.query.q;

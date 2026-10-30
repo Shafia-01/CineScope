@@ -1,9 +1,3 @@
 .env
 node_modules
 package-lock.json
-# Private interview-preparation documents
-cinescope.txt
-work experience - edunet.txt
-CineScope metric audit.md
-cinescope_codebase_audit_report.md
-cinescope_audit_reconciliation_report.md

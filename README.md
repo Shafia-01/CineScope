@@ -12,64 +12,90 @@
 
   <h3>🔗 <a href="https://cinescope-worldofmovies.netlify.app/">CineScope - Your Lens Into the World of Movies</a></h3>
   <p>
-    <i>A modern, full-stack movie discovery, review, and watchlist platform that enables users to search movies, explore detailed information, submit ratings & reviews, and manage personalized watchlists through secure API integration.</i>
+    <i>A lightweight, full-stack movie discovery platform where users can search movies, explore details, submit ratings & reviews, and keep a personal watchlist, with the OMDb API key held server-side behind an Express proxy.</i>
   </p>
 
   <h3><a href="https://youtu.be/YoLwDTEHoXk"><img src="https://img.shields.io/badge/YouTube-Demo%20Video-red?style=flat-square&logo=youtube&logoColor=white" alt="YouTube Demo Video"></a></h3>
   <p>
-    The demo link above features a video walkthrough demonstrating CineScope's movie search capabilities, detailed movie detail modals, rating and review submissions, persistent watchlist management, and the secure Express API proxy integration.
+    The demo video walks through movie search, the details modal, rating and review submission, the persistent watchlist, and the Express API proxy.
   </p>
 </div>
 
 ---
 
 ## 📌 Project Overview
-In the digital era, movie enthusiasts often struggle with scattered movie data, cluttered interfaces, or platforms that require immediate signups just to browse and track movies. Existing mainstream solutions are often overwhelming, loaded with advertisements, and demanding on system resources. 
+Movie enthusiasts who just want to browse films, leave a review, and track a watchlist are often pushed toward bloated platforms that require an account before any meaningful interaction. Calling a third-party API directly from the browser also exposes the private API key in network traffic, and heavy frontend frameworks add overhead to what is a single-purpose utility.
 
-**CineScope** was built to solve this by providing a lightweight, cinematic, and clutter-free interface. It offers high-performance movie searches, seamless review collection, and private watchlist curation without requiring complex user onboarding, serving as a clean utility for casual viewers.
+**CineScope** is a lightweight, clutter-free alternative. It needs no signup and no database: a vanilla JavaScript frontend talks to a small Express proxy that calls the OMDb API with the key kept server-side, and personal data (watchlist and reviews) lives in the browser's `localStorage`.
 
 ---
 
-## ✨ Key Features
-| Feature | Description | Technical / User Benefit |
-| :--- | :--- | :--- |
-| **🔎 Movie Search** | Query titles instantly using OMDb's registry. | High-speed, dynamic results display. |
-| **📖 Detailed Modals** | Explores director, cast, plot, genre, and poster information inside a single-page modal. | Minimizes page reloads, keeping user context intact. |
-| **⭐ Ratings & Reviews** | Submit local star-ratings and detailed text feedback per film. | Encourages interactive engagement and expression. |
-| **📌 Personal Watchlist** | Bookmark movies to watch later via card clicks. | Keeps track of movies of interest in a dedicated panel. |
-| **💾 Local Persistence** | Saves watchlist and reviews to client-side storage. | Data persists across browser sessions without a server database. |
-| **📱 Responsive Design** | Clean cinematic theme adapting to desktop, tablet, and mobile displays. | Accessible and visually consistent on any screen size. |
-| **🔐 Secure API Proxy** | Routes OMDb requests through an Express gateway backend. | Hides developer API keys from client-side network inspectors. |
-| **⚠️ Error Handling** | Displays graceful UI fallbacks on query failures or network drops. | Prevents silent failures and ensures a reliable user experience. |
+## 📊 At a Glance
+| Metric | Count |
+| :--- | :--- |
+| User-facing features | **8** |
+| Client-side validation and verification checks | **6** |
+| Error-recovery mechanisms | **3** |
+| Production-critical issues resolved | **5** |
+| OMDb API keys in frontend code or browser network requests | **0** |
+
+---
+
+## ✨ Features
+| # | Feature | Description |
+| :-: | :--- | :--- |
+| 1 | **🔎 Movie Search** | Search by title with the Search button or the Enter key. |
+| 2 | **🎞️ Results Grid** | Matching movies render dynamically as cards in a CSS Grid, with no page reload. |
+| 3 | **📖 Details Modal** | View poster, genre, director, cast, and full plot in a single-page modal. |
+| 4 | **📌 Add to Watchlist** | Save a movie to your watchlist from its details modal. |
+| 5 | **🗂️ Personal Watchlist** | A dedicated section that shows your saved movies and loads on page start. |
+| 6 | **⭐ Rating (1–5)** | Submit a numeric rating for any movie. |
+| 7 | **📝 Text Reviews** | Write a review and see all reviews for that movie in the modal. |
+| 8 | **❌ Modal Dismissal** | Close the modal with the close button or by clicking the backdrop. |
+
+### Supporting Architecture (not counted as features)
+* **Express proxy** that keeps the OMDb API key off the client.
+* **`localStorage` persistence** for the watchlist and reviews, so no database is needed.
+* **Responsive grid layout** that reflows movie cards using `auto-fit` columns.
 
 ---
 
 ## 🏗️ Architecture
-CineScope separates concerns into a modular frontend and backend proxy architecture to prevent cross-origin issues and secure private environment credentials.
+CineScope separates a static frontend from a small backend proxy so the API key never reaches the browser.
 
 ### System Flow
 ```mermaid
 flowchart TD
     User[👤 User Browser] <-->|Interacts| Frontend[🎨 Vanilla JS Frontend]
     Frontend <-->|HTTP Requests| ExpressProxy[🚀 Node.js + Express Proxy]
-    ExpressProxy <-->|Secured API Call + Key| OMDbAPI[☁️ External OMDb API]
+    ExpressProxy <-->|API Call + Server-side Key| OMDbAPI[☁️ External OMDb API]
     Frontend <-->|Read / Write| LocalStorage[(💾 Browser LocalStorage)]
 ```
 
-### Key Architectural Decisions:
-1. **Express Reverse Proxy**: Direct client-to-OMDb API calls expose the sensitive API key in the browser network tab. Running an Express server handles key injection serverside.
-2. **Hybrid Storage**: Volatile data (movie metadata) is fetched on demand, while personalized user states (watchlist and reviews) are stored locally in the browser's `localStorage` to eliminate db overhead.
+### Request Lifecycle
+1. **Search input:** pressing Enter or clicking Search triggers `fetchMovies()` once the trimmed query is non-empty, which sends a `GET` to the proxy's `/search` endpoint.
+2. **Proxy search route:** `/search` reads `req.query.q`, builds the OMDb URL with the server-side `OMDB_KEY`, and returns OMDb's JSON response unmodified.
+3. **Card rendering:** `displayMovies()` iterates the `Search` array and injects movie cards into the grid.
+4. **Details modal:** clicking a card calls `openMovieDetails(imdbID)`, which fetches `/details/:id` (OMDb full-plot endpoint) and fills the modal.
+5. **Persistence:** watchlist additions and reviews are serialized to `localStorage` under fixed keys. The watchlist loads on page start and reviews load when a movie's modal opens.
+
+### Key Engineering Decisions
+1. **Express proxy:** the OMDb key lives only in a server-side environment variable. Direct browser-to-OMDb calls would expose it in the network tab.
+2. **`localStorage` over a database:** watchlist and review data are personal and low-volume, so this removes the need for a database, authentication, and sessions. *Trade-off:* data is browser-local and not portable across devices.
+3. **Vanilla JS over a framework:** the interactions (search, modal, watchlist, reviews) are straightforward DOM work. There is no build step, and the frontend deploys as plain static files.
+4. **Dynamic handler binding on the modal:** `reviewForm.onsubmit` and `addToWatchlistBtn.onclick` are reassigned each time a modal opens, so the handlers close over the current movie. This avoids a global "selected movie" variable and keeps handler logic tied to the modal lifecycle.
 
 ---
 
 ## 🛠️ Tech Stack
 | Category | Technologies |
 | :--- | :--- |
-| **Frontend** | HTML5, CSS3 (Custom Cinematic Red-Black-Gold Theme), Vanilla JavaScript (ES6+) |
+| **Frontend** | HTML5, CSS3 (Grid, Flexbox, custom red, black, and cream theme), Vanilla JavaScript (ES6+) |
 | **Backend** | Node.js, Express.js, CORS, Dotenv, Node-Fetch |
 | **API** | OMDb REST API |
 | **Persistence** | Browser `localStorage` API |
 | **Deployment** | Render (Backend), Netlify (Frontend) |
+| **Testing** | Manual, in the browser and with direct HTTP requests (no automated test suite) |
 
 ---
 
@@ -81,43 +107,68 @@ cinescope/
 │   ├── package.json         # Backend dependencies & run scripts
 │   └── server.js            # Express server & OMDb API proxy endpoints
 ├── frontend/
-│   ├── index.html           # Main markup structure & modal layouts
-│   ├── style.css            # Custom responsive layout styles (Cinematic theme)
-│   └── script.js            # Frontend DOM operations & state management
+│   ├── index.html           # Main markup structure & modal layout
+│   ├── style.css            # Layout, grid, modal, and theme styles
+│   └── script.js            # DOM operations, API calls, and localStorage state
+├── assets/                  # Demo screenshots used in this README
 ├── README.md                # Project documentation
-└── .gitignore               # Excludes node_modules and env secrets
+└── .gitignore               # Excludes node_modules, env secrets, and lockfile
 ```
 
-### Major File Descriptions:
-* **[server.js](backend/server.js)**: Runs the Express server, injects `OMDB_KEY` securely into query streams, and hosts CORS-compliant API endpoints.
-* **[index.html](frontend/index.html)**: The single-page shell containing the search controls, dynamic movie grid placeholders, and details modal structure.
-* **[script.js](frontend/script.js)**: Coordinates asynchronous backend fetches, renders cards dynamically, opens detail modals, and manages LocalStorage read/writes.
-* **[style.css](frontend/style.css)**: Implements grid layouts, transitions, and hover animations, built on top of a customized red, dark-gray, and gold palette.
+### Major File Descriptions
+* **[server.js](backend/server.js)**: Runs the Express server, injects `OMDB_KEY` server-side, enables CORS, and exposes `/search` and `/details/:id`.
+* **[index.html](frontend/index.html)**: The single-page shell with the search bar, results and watchlist grids, and the details modal.
+* **[script.js](frontend/script.js)**: Handles backend fetches, card rendering, modal handlers, and `localStorage` reads and writes.
+* **[style.css](frontend/style.css)**: Grid layout, modal, hover transitions, and the dark red, black, and cream palette.
 
 ---
 
 ## 🔌 API Integration & Security
-CineScope interacts with the external **OMDb API** through a customized backend middleware proxy.
+CineScope talks to the external **OMDb API** through a small backend proxy.
 
-### Endpoint Mapping:
-1. **Search Endpoint**: `/search?q={query}`
+### Endpoint Mapping
+1. **Search:** `/search?q={query}`
    * Maps to `https://www.omdbapi.com/?apikey=${OMDB_KEY}&s={query}`
    * Returns a list of matching movies.
-2. **Details Endpoint**: `/details/:id`
+2. **Details:** `/details/:id`
    * Maps to `https://www.omdbapi.com/?apikey=${OMDB_KEY}&i={id}&plot=full`
-   * Obtains comprehensive metadata for a specific IMDb reference ID.
+   * Returns full metadata for one IMDb ID.
 
-### Security Implementation:
-To prevent API abuse and usage quota exhaustion:
-* The client makes requests directly to the proxy (e.g., `https://cinescope-7k1y.onrender.com/search?q=Batman`).
-* The proxy server reads the `OMDB_KEY` from serverside environment variables (`process.env.OMDB_KEY`), constructs the secure external request, executes it, and sends the sanitized JSON back to the client.
-* Standard `cors` middleware restricts unauthorized client origins from spamming the endpoints.
+### What the Proxy Does
+* The client calls the proxy (for example `https://cinescope-7k1y.onrender.com/search?q=Batman`).
+* The proxy reads `process.env.OMDB_KEY`, builds the OMDb request, and returns OMDb's JSON to the client unmodified.
+* The OMDb key never appears in the frontend code or in the browser's network requests.
+
+### Security Notes
+The proxy **hides the API key; it is not a full security layer.**
+* CORS is enabled with `app.use(cors())`, which allows all origins (no origin whitelist yet).
+* There is no rate limiting or quota protection, and no server-side input validation.
+* Movie and review text are rendered with `innerHTML`; switching to `textContent` or sanitizing the values is a planned improvement.
+* The OMDb key was accidentally committed once in `backend/.env`. The file was removed from tracking and ignored, and **the key has since been rotated**, so the value in Git history is no longer valid.
+
+---
+
+## ✅ Validation & Error Recovery
+### 6 Client-Side Validation and Verification Checks
+1. Search query is trimmed and must be non-empty.
+2. The OMDb response must contain a `Search` array before results are rendered.
+3. OMDb's `"N/A"` poster value is detected and routed to a fallback image path.
+4. Duplicate watchlist entries are blocked by IMDb ID.
+5. Rating is required and constrained to 1–5 (HTML5 form constraints).
+6. Review text is required (HTML5 form constraints).
+
+> These checks run in the browser only. A direct HTTP request to the backend bypasses all six.
+
+### 3 Error-Recovery Mechanisms
+1. **Client fallback:** `fetchMovies()` uses `try/catch` and shows "Error loading movies." if the request fails or the response is not valid JSON (for example, when the backend is unreachable or cold-starting).
+2. **Backend handling:** both proxy routes use `try/catch` and return an HTTP 500 JSON error if the OMDb call throws, so the Node process keeps running.
+3. **Null-safe storage reads:** `JSON.parse(localStorage.getItem(KEY)) || []` (or `{}`) gives first-time visitors an empty default.
 
 ---
 
 ## 💡 Implementation Highlights
-### 1. Secure API Proxy Routing
-The Node.js proxy server guarantees that private keys remain concealed, resolving CORS policies elegantly:
+### 1. API Proxy Routing
+The Node.js proxy keeps the key server-side and returns OMDb's response to the browser:
 ```javascript
 app.get("/search", async (req, res) => {
   const query = req.query.q;
@@ -132,7 +183,7 @@ app.get("/search", async (req, res) => {
 ```
 
 ### 2. Client-Side State Synchronization
-Rather than relying on a complex external state library, local storage values are synchronized directly upon interaction:
+Instead of a state library, `localStorage` is read and written directly on each interaction, with duplicate prevention by IMDb ID:
 ```javascript
 function addToWatchlist(movie) {
   let watchlist = JSON.parse(localStorage.getItem(WATCHLIST_KEY)) || [];
@@ -144,8 +195,8 @@ function addToWatchlist(movie) {
 }
 ```
 
-### 3. DOM Event Management & Modals
-The movie details modal registers event listener handlers dynamically for form submissions, ensuring clean updates:
+### 3. Per-Movie Modal Handlers
+Handlers are rebound each time the modal opens so they close over the current movie's ID:
 ```javascript
 reviewForm.onsubmit = (e) => {
   e.preventDefault();
@@ -157,24 +208,23 @@ reviewForm.onsubmit = (e) => {
 };
 ```
 
-
 ---
 
 ## 🚀 Deployment
-The application is deployed using a decoupled frontend/backend architecture:
-* **Frontend**: Hosted on [Netlify](https://www.netlify.com/) at [cinescope-frontend](https://cinescope-worldofmovies.netlify.app/)
-* **Backend**: Hosted on [Render](https://render.com/) at [cinescope-backend](https://cinescope-7k1y.onrender.com)
+The app is deployed with a decoupled frontend and backend:
+* **Frontend**: [Netlify](https://www.netlify.com/) at [cinescope-frontend](https://cinescope-worldofmovies.netlify.app/)
+* **Backend**: [Render](https://render.com/) at [cinescope-backend](https://cinescope-7k1y.onrender.com)
+
+The backend binds to `process.env.PORT || 3000`, since Render assigns the port.
 
 ---
 
-
 ## 💻 Local Development Setup
-Follow these steps to set up and run CineScope on your local environment.
 
 ### Prerequisites
 * **Node.js** (v16.0.0 or higher recommended)
-* **npm** (comes packaged with Node.js)
-* **OMDb API Key** (Request a free or developer key from [omdbapi.com](https://www.omdbapi.com/))
+* **npm** (comes with Node.js)
+* **OMDb API Key** (free or developer key from [omdbapi.com](https://www.omdbapi.com/))
 
 ### Installation & Run Steps
 1. **Clone the Repository:**
@@ -188,32 +238,32 @@ Follow these steps to set up and run CineScope on your local environment.
    cd backend
    npm install
    ```
-   Create a `.env` file in the `backend/` directory:
+   Create a `.env` file in the `backend/` directory (never commit it):
    ```env
    PORT=3000
    OMDB_KEY=your_omdb_api_key_here
    ```
-   Launch the development server:
+   Start the server:
    ```bash
    npm start
    # or: node server.js
    ```
-   Verify the server is running at `http://localhost:3000/search?q=Interstellar`
+   Verify it is running at `http://localhost:3000/search?q=Interstellar`
 
 3. **Configure & Run Frontend Client:**
-   * Navigate to the `frontend/` directory.
-   * Configure the base API URL at the top of `script.js` to point to local server:
+   * Go to the `frontend/` directory.
+   * Point the base API URL at the top of `script.js` to your local server:
      ```javascript
      const API_BASE = "http://localhost:3000";
      ```
-   * Open `frontend/index.html` in your browser (either double-click or use VS Code Live Server at `http://127.0.0.1:5500`).
+   * Open `frontend/index.html` in your browser (double-click it or use VS Code Live Server at `http://127.0.0.1:5500`).
 
 ---
 
 ## 📸 Screenshots
 
 <h3 align="center">1. Search & Watchlist Experience</h3>
-<p align="center"><i>The clean, cinematic home page allows users to search for movies, view query results dynamically, and manage their personal watchlists.</i></p>
+<p align="center"><i>The home page lets users search for movies, view results, and manage a personal watchlist.</i></p>
 <p align="center">
   <img src="assets/Demo%20(1).png" alt="CineScope Home Page" width="32.5%" />
   <img src="assets/Demo%20(2).png" alt="Search Query Results" width="32.5%" />
@@ -223,7 +273,7 @@ Follow these steps to set up and run CineScope on your local environment.
 <br>
 
 <h3 align="center">2. Movie Details & Reviews</h3>
-<p align="center"><i>Interactive detail modals showing comprehensive movie metadata fetched from OMDb, alongside ratings and reviews that persist locally.</i></p>
+<p align="center"><i>The details modal shows movie metadata from OMDb, alongside ratings and reviews that persist locally.</i></p>
 <p align="center">
   <img src="assets/Demo%20(4).png" alt="Movie Details Modal" width="49%" />
   <img src="assets/Demo%20(3).png" alt="Movie Review & Rating Form" width="49%" />
@@ -232,14 +282,36 @@ Follow these steps to set up and run CineScope on your local environment.
 ---
 
 ## 🛡️ Challenges & Learnings
-* **CORS Policies and API Secrets**: Initially, fetching directly from the browser exposed API keys inside network payloads and threw CORS validation errors. Building the Node.js/Express proxy solved both: securing the credentials server-side and automatically attaching access headers.
-* **Efficient UI State Lifecycle**: With multiple interactive features (reviews, lists, modal transitions), preventing DOM layout thrashing was crucial. We leveraged targeted event delegations and custom modular rendering methods (`createMovieCard`) to construct elements incrementally.
-* **Edge Case Handling (N/A Values)**: Many OMDb database entries lack posters or plot details. To maintain UI symmetry, we built fallback conditions (such as fallbacks to local asset placeholder images) when fields returned `"N/A"`.
+Five production-critical issues were resolved to get CineScope deployed:
+
+1. **API key exposure:** the first version called OMDb directly from the browser, which would have exposed the key. Moving the call behind the Express proxy keeps the key in a server-side environment variable.
+2. **CORS:** with the frontend and backend on separate origins, the browser blocked requests. Enabling the `cors` middleware fixed it (currently allowing all origins).
+3. **Committed `.env`:** `backend/.env` was committed by mistake. It was removed from tracking and added to `.gitignore`, and the OMDb key was rotated because the old value remains in Git history.
+4. **Endpoint alignment (the hardest bug):** the frontend called the Render URL without the `/api` prefix the backend still used, which returned HTTP 404s. Setting the base URL to the Render backend and registering the routes as `/search` and `/details/:id` fixed it.
+5. **Dynamic port binding:** the port was hardcoded to 3000, but Render assigns one. The backend now uses `process.env.PORT || 3000`.
+
+### Lessons Learned
+* **Per-open handler binding:** binding `onsubmit` and `onclick` on each modal open, not once at startup, is necessary when handlers must close over per-movie state like the IMDb ID.
+* **`localStorage` limits:** it is enough for single-device personal state but becomes the first bottleneck once cross-device sync or multiple users are needed, so the data schema should be designed with that migration in mind.
+* **"N/A" data:** many OMDb entries lack posters or plot details, so the UI checks for `"N/A"` values instead of assuming data exists.
+
+---
+
+## ⚠️ Known Limitations
+* The proxy has no server-side validation, rate limiting, caching, or origin whitelist.
+* The search query is not URL-encoded before being sent.
+* The client does not check `res.ok`, so an HTTP 500 from the proxy shows "No results found."
+* Corrupted JSON in `localStorage` is not handled.
+* The `required` attribute accepts a whitespace-only review.
+* There are no retries and no automated tests.
 
 ---
 
 ## 🚀 Future Roadmap
-* **🔑 User Authentication**: Integrate JWT-based token authentication to support personalized user logins and private profiles.
-* **☁️ Database Integration**: Migrate client-side LocalStorage to a persistent cloud database (e.g., MongoDB or PostgreSQL) for cross-device synchronization.
-* **🎯 Recommendation Engine**: Implement a basic content-filtering recommendation engine based on user ratings and genres.
-* **📢 Social Sharing**: Enable users to share their watchlist or movie reviews directly to social platforms or via unique URLs.
+* **🧱 Server-Side Hardening:** add server-side validation (for example with `express-validator`), an origin whitelist, rate limiting, and URL-encoding for the search query.
+* **⚡ Response Caching:** add in-memory or Redis caching on the proxy to reduce repeated OMDb calls for common searches and detail lookups.
+* **🛡️ Safer Rendering & Error Handling:** use `textContent` (or sanitize) instead of `innerHTML`, check `res.ok` on the client, and add the missing placeholder image.
+* **🔑 User Authentication:** add JWT-based authentication for personalized logins and private profiles.
+* **☁️ Database Integration:** replace `localStorage` with a cloud database (for example MongoDB or PostgreSQL) for cross-device sync.
+* **🎯 Recommendation Engine:** add content-based recommendations from user ratings and genres.
+* **📢 Social Sharing:** let users share their watchlist or reviews through unique URLs.
